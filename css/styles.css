@@ -57,7 +57,7 @@ html.dark-mode body {
 }
 
 html.dark-mode .header {
-  background: rgba(26, 31, 40, 0.94);
+  background: rgba(31, 42, 58, 0.94);
 }
 
 h1 {
@@ -106,7 +106,7 @@ button:hover {
 
 html.dark-mode button:hover {
   border-color: #3a4558;
-  background: #232d3c;
+  background: #262f40;
 }
 
 button.active {
@@ -230,7 +230,7 @@ html.dark-mode option {
 }
 
 html.dark-mode .filter-bar {
-  background: rgba(26, 31, 40, 0.88);
+  background: rgba(31, 42, 58, 0.88);
 }
 
 .filter-bar button {
@@ -299,7 +299,7 @@ html.dark-mode .filter-bar button.active {
 }
 
 html.dark-mode .brand-head {
-  background: linear-gradient(90deg, #1a1f28, #15191f);
+  background: linear-gradient(90deg, #1f2a3a, #1a242f);
 }
 
 .brand-head h2 {
@@ -343,7 +343,7 @@ html.dark-mode .brand-head small {
 }
 
 html.dark-mode .color-head {
-  background: #151a22;
+  background: #1a242f;
 }
 
 .color-title {
@@ -435,18 +435,18 @@ html.dark-mode .color-head {
 }
 
 html.dark-mode .product-card.egg-white {
-  background: #131820;
-  border-color: #2a3040;
+  background: #1a242f;
+  border-color: #2a3540;
 }
 
 html.dark-mode .product-card.egg-white .product-type {
-  background: #1a1f28;
+  background: #1f2a3a;
   color: #8a92a0;
 }
 
 html.dark-mode .product-card.egg-white .product-barcode {
-  background: #1a1f28;
-  border-color: #2a3040;
+  background: #1f2a3a;
+  border-color: #2a3540;
   color: #d4d8e0;
 }
 
@@ -472,18 +472,18 @@ html.dark-mode .product-card.egg-white .product-barcode {
 }
 
 html.dark-mode .product-card.egg-red {
-  background: #22171a;
-  border-color: #3a2a2c;
+  background: #261a1d;
+  border-color: #3a2a2d;
 }
 
 html.dark-mode .product-card.egg-red .product-type {
-  background: #2a1f22;
+  background: #2a2228;
   color: #d97373;
 }
 
 html.dark-mode .product-card.egg-red .product-barcode {
-  background: #2a1f22;
-  border-color: #3a2a2c;
+  background: #2a2228;
+  border-color: #3a2a2d;
   color: #e8a5a5;
 }
 
@@ -509,18 +509,18 @@ html.dark-mode .product-card.egg-red .product-barcode {
 }
 
 html.dark-mode .product-card.egg-balady {
-  background: #22201a;
-  border-color: #3a3020;
+  background: #262420;
+  border-color: #3a3228;
 }
 
 html.dark-mode .product-card.egg-balady .product-type {
-  background: #2a2820;
+  background: #2a2825;
   color: #d4a563;
 }
 
 html.dark-mode .product-card.egg-balady .product-barcode {
-  background: #2a2820;
-  border-color: #3a3020;
+  background: #2a2825;
+  border-color: #3a3228;
   color: #e8cca8;
 }
 
@@ -546,18 +546,18 @@ html.dark-mode .product-card.egg-balady .product-barcode {
 }
 
 html.dark-mode .product-card.egg-other {
-  background: #17201a;
-  border-color: #2a3028;
+  background: #1b2430;
+  border-color: #2a3240;
 }
 
 html.dark-mode .product-card.egg-other .product-type {
-  background: #212830;
+  background: #232d3c;
   color: #7fa5d5;
 }
 
 html.dark-mode .product-card.egg-other .product-barcode {
-  background: #212830;
-  border-color: #2a3028;
+  background: #232d3c;
+  border-color: #2a3240;
   color: #a8c8e0;
 }
 
@@ -583,8 +583,8 @@ html.dark-mode .product-card.egg-other .product-barcode {
 
 html.dark-mode .product-index {
   color: #a89f91;
-  background: rgba(26, 31, 40, 0.68);
-  border: 1px solid rgba(66, 80, 100, 0.55);
+  background: rgba(31, 42, 58, 0.68);
+  border: 1px solid rgba(74, 123, 167, 0.35);
 }
 
 .product-type {
@@ -628,7 +628,7 @@ html.dark-mode .product-index {
 }
 
 html.dark-mode .product-card .actions button {
-  background: rgba(26, 31, 40, 0.75);
+  background: rgba(31, 42, 58, 0.75);
 }
 
 /* ========================================
@@ -672,7 +672,7 @@ html.dark-mode .product-card .actions button {
 }
 
 html.dark-mode .tax-code {
-  background: #1a1f28;
+  background: #1f2a3a;
   color: #d4d8e0;
 }
 

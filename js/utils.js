@@ -128,9 +128,9 @@ function toggleDarkMode() {
 function initTheme() {
   const html = document.documentElement;
   const savedTheme = localStorage.getItem('theme-preference');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+  // Default to light mode
+  if (savedTheme === 'dark') {
     html.classList.add('dark-mode');
   } else {
     html.classList.remove('dark-mode');
