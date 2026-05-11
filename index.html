@@ -1,94 +1,150 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OVAL - أكواد الأصناف | ألوان هادية</title>
-  <link rel="stylesheet" href="css/themes.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OVAL Codes Hub</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app">
-    <section class="header">
-      <div>
-        <h1>OVAL | أكواد الأصناف والأرقام الضريبية</h1>
-        <p class="subtitle">فلتر بنقرة واحدة حسب البراند، مع شكل هادي وسادة مناسب للشغل اليومي.</p>
+  <section id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="brand-mark">OVAL</div>
+      <h1>مخزن أكواد أوفال</h1>
+      <p>باركود الأصناف والأرقام الضريبية في مكان واحد.</p>
+      <div class="login-row">
+        <input id="passwordInput" type="password" placeholder="كلمة المرور" autocomplete="current-password" />
+        <button id="loginBtn">دخول</button>
       </div>
-      <div class="tabs">
-        <button id="productsTab" class="active" onclick="setPage('products')">باركود الأصناف</button>
-        <button id="taxTab" onclick="setPage('tax')">الأرقام الضريبية</button>
-        <button id="themeToggle" class="theme-toggle" onclick="toggleDarkMode()">🌙</button>
+      <small id="loginError" class="error-text"></small>
+    </div>
+  </section>
+
+  <main id="app" class="app hidden">
+    <button id="controlsToggle" class="controls-toggle" type="button" aria-label="فتح القائمة">
+      <span class="toggle-mark">☰</span>
+      <span>القائمة</span>
+    </button>
+    <div id="panelOverlay" class="panel-overlay"></div>
+
+    <header id="smartHeader" class="smart-header" aria-label="قائمة التحكم">
+      <div class="drawer-head">
+        <div class="drawer-brand">
+          <div class="brand-badge">OV</div>
+          <div>
+            <p class="eyebrow">OVAL operations</p>
+            <h1>لوحة التحكم</h1>
+            <small>نسخ سريع للأصناف والأرقام الضريبية</small>
+          </div>
+        </div>
+        <button id="drawerClose" class="drawer-close" type="button" aria-label="إغلاق">×</button>
       </div>
-    </section>
 
-    <section class="toolbar">
-      <input id="search" class="search" placeholder="ابحث بالاسم أو الباركود أو الرقم الضريبي..." oninput="render()">
-      <button class="orange" onclick="openAdd()">+ إضافة</button>
-      <button onclick="resetData()">استرجاع الأصل</button>
-      <button onclick="window.print()">طباعة</button>
-    </section>
-
-    <section id="productFilters" class="filter-bar">
-      <button data-filter="الكل" class="active" onclick="setProductFilter('الكل')">الكل</button>
-      <button data-filter="بيج ايج" onclick="setProductFilter('بيج ايج')">بيج ايج</button>
-      <button data-filter="كارفور" onclick="setProductFilter('كارفور')">كارفور</button>
-      <button data-filter="فاليو" onclick="setProductFilter('فاليو')">فاليو</button>
-      <button data-filter="أخرى" onclick="setProductFilter('أخرى')">أخرى</button>
-    </section>
-
-    <section id="stats" class="stats"></section>
-    <main id="content"></main>
-  </div>
-
-  <div id="toast" class="toast"></div>
-
-  <dialog id="editor">
-    <form class="modal" onsubmit="saveEdit(event)">
-      <h3 id="modalTitle">تعديل</h3>
-      <input type="hidden" id="editType">
-      <input type="hidden" id="editId">
-
-      <div id="productFields">
-        <div class="field">
-          <label>اسم الصنف</label>
-          <textarea id="editName"></textarea>
+      <div class="drawer-card page-card">
+        <div class="drawer-label">الصفحات</div>
+        <div class="nav-tabs" role="tablist">
+          <button class="active" data-page="products">باركود الأصناف</button>
+          <button data-page="clients">الأرقام الضريبية</button>
         </div>
-        <div class="field">
-          <label>الباركود</label>
-          <input id="editCode" dir="ltr">
+      </div>
+
+      <div class="drawer-card">
+        <div class="drawer-label">البحث السريع</div>
+        <input id="searchInput" class="drawer-search" type="search" placeholder="ابحث بالاسم أو الباركود أو الرقم الضريبي..." />
+      </div>
+
+      <div class="drawer-card filters-card">
+        <div class="drawer-label">فلترة الأصناف</div>
+        <div class="filter-title">حسب البراند</div>
+        <div class="filters-row" id="brandFilters"></div>
+        <div class="filter-title">حسب اللون</div>
+        <div class="filters-row compact" id="colorFilters"></div>
+      </div>
+
+      <div class="drawer-card">
+        <div class="drawer-label">الأدوات</div>
+        <div class="actions-grid">
+          <button id="addBtn">إضافة</button>
+          <button id="printBtn" class="ghost">طباعة</button>
+          <button id="backupBtn" class="ghost">تصدير نسخة</button>
+          <label class="import-label ghost" for="importFile">استيراد نسخة</label>
+          <input id="importFile" type="file" accept="application/json" hidden />
+          <button id="resetBtn" class="ghost danger-soft wide">استرجاع الأصل</button>
         </div>
-        <div class="field">
-          <label>المجموعة</label>
-          <select id="editBrand">
+      </div>
+
+      <div class="drawer-card settings-card">
+        <div class="drawer-label">إعدادات العرض</div>
+        <div class="switches">
+          <label><input id="quickMode" type="checkbox" /> وضع الشغل السريع</label>
+          <label><input id="showFavoritesFirst" type="checkbox" checked /> إظهار المفضلة والأكثر استخدامًا</label>
+        </div>
+        <div class="footer-actions">
+          <button id="themeBtn" class="ghost">الوضع الداكن</button>
+          <button id="lockBtn" class="ghost danger-soft">قفل</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="status-grid">
+      <article class="status-card">
+        <span>آخر نسخ</span>
+        <strong id="lastCopiedName">لسه مفيش</strong>
+        <code id="lastCopiedValue">—</code>
+      </article>
+      <article class="status-card barcode-box">
+        <span>معاينة الباركود</span>
+        <div id="barcodePreview" class="barcode-preview"></div>
+        <code id="barcodePreviewText">—</code>
+      </article>
+      <article class="status-card">
+        <span>إحصائيات</span>
+        <strong id="statsText">—</strong>
+        <small>البيانات محفوظة على الجهاز</small>
+      </article>
+    </section>
+
+    <section id="content" class="content"></section>
+  </main>
+
+  <dialog id="editorDialog" class="editor-dialog">
+    <form method="dialog" id="editorForm">
+      <div class="modal-head">
+        <h2 id="editorTitle">تعديل</h2>
+        <button type="button" id="closeEditor" class="icon-btn">×</button>
+      </div>
+      <div id="productFields" class="form-grid">
+        <label>اسم الصنف<input id="itemName" /></label>
+        <label>الباركود<input id="itemBarcode" dir="ltr" /></label>
+        <label>التصنيف
+          <select id="itemGroup">
             <option>بيج ايج</option>
             <option>كارفور</option>
             <option>فاليو</option>
             <option>أخرى</option>
           </select>
-        </div>
+        </label>
+        <label>اللون
+          <select id="itemColor">
+            <option>أبيض</option>
+            <option>أحمر</option>
+            <option>بلدي</option>
+            <option>غير محدد</option>
+          </select>
+        </label>
       </div>
-
-      <div id="taxFields">
-        <div class="field">
-          <label>اسم الشركة</label>
-          <input id="editClient">
-        </div>
-        <div class="field">
-          <label>الرقم الضريبي</label>
-          <input id="editTax" dir="ltr">
-        </div>
+      <div id="clientFields" class="form-grid hidden">
+        <label>اسم الشركة<input id="clientName" /></label>
+        <label>الرقم الضريبي<input id="clientTax" dir="ltr" /></label>
       </div>
-
       <div class="modal-actions">
-        <button type="submit">حفظ</button>
-        <button type="button" onclick="document.getElementById('editor').close()">إلغاء</button>
-        <button type="button" class="danger" onclick="deleteCurrent()">حذف</button>
+        <button id="saveEditor" value="default">حفظ</button>
+        <button type="button" id="deleteItem" class="danger-soft">حذف</button>
       </div>
     </form>
   </dialog>
 
-  <!-- SCRIPTS -->
-  <script src="js/utils.js"></script>
-  <script src="js/main.js"></script>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
 </body>
 </html>
