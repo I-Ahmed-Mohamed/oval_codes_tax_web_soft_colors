@@ -1,4 +1,17 @@
-const CACHE='oval-codes-v2-eta-logo';
-const FILES=['./','./index.html','./style.css','./app.js','./manifest.webmanifest','./eta-logo.png'];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES))));
-self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));
+const CACHE = 'oval-codes-github-fix-v3';
+const ASSETS = ['./','./index.html','./style.css','./app.js','./eta-logo.png'];
+self.addEventListener('install', event => {
+  self.skipWaiting();
+  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).catch(()=>{}));
+});
+self.addEventListener('activate', event => {
+  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE && k.startsWith('oval-')).map(k => caches.delete(k)))).then(()=>self.clients.claim()));
+});
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+  event.respondWith(fetch(event.request).then(res => {
+    const copy = res.clone();
+    caches.open(CACHE).then(cache => cache.put(event.request, copy)).catch(()=>{});
+    return res;
+  }).catch(() => caches.match(event.request).then(r => r || caches.match('./index.html'))));
+});
