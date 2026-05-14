@@ -3,148 +3,161 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0f2a43" />
   <title>OVAL Codes Hub</title>
+  <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <section id="loginScreen" class="login-screen">
-    <div class="login-card">
-      <div class="brand-mark">OVAL</div>
-      <h1>مخزن أكواد أوفال</h1>
-      <p>باركود الأصناف والأرقام الضريبية في مكان واحد.</p>
+  <div id="login" class="login-screen">
+    <section class="login-card">
+      <div class="brand-mark">OV</div>
+      <p class="eyebrow">OVAL Internal Tools</p>
+      <h1>مركز الأكواد والأرقام الضريبية</h1>
+      <p class="muted">دخول آمن وسريع لبيانات الأصناف والعملاء.</p>
       <div class="login-row">
-        <input id="passwordInput" type="password" placeholder="كلمة المرور" autocomplete="current-password" />
-        <button id="loginBtn">دخول</button>
+        <input id="passwordInput" type="password" placeholder="كلمة السر" autocomplete="current-password" />
+        <button id="loginBtn" class="btn primary">دخول</button>
       </div>
-      <small id="loginError" class="error-text"></small>
-    </div>
-  </section>
-
-  <main id="app" class="app hidden">
-    <button id="controlsToggle" class="controls-toggle" type="button" aria-label="فتح القائمة">
-      <span class="toggle-mark">☰</span>
-      <span>القائمة</span>
-    </button>
-    <div id="panelOverlay" class="panel-overlay"></div>
-
-    <header id="smartHeader" class="smart-header" aria-label="قائمة التحكم">
-      <div class="drawer-head">
-        <div class="drawer-brand">
-          <div class="brand-badge">OV</div>
-          <div>
-            <p class="eyebrow">OVAL operations</p>
-            <h1>لوحة التحكم</h1>
-            <small>نسخ سريع للأصناف والأرقام الضريبية</small>
-          </div>
-        </div>
-        <button id="drawerClose" class="drawer-close" type="button" aria-label="إغلاق">×</button>
-      </div>
-
-      <div class="drawer-card page-card">
-        <div class="drawer-label">الصفحات</div>
-        <div class="nav-tabs" role="tablist">
-          <button class="active" data-page="products">باركود الأصناف</button>
-          <button data-page="clients">الأرقام الضريبية</button>
-        </div>
-      </div>
-
-      <div class="drawer-card">
-        <div class="drawer-label">البحث السريع</div>
-        <input id="searchInput" class="drawer-search" type="search" placeholder="ابحث بالاسم أو الباركود أو الرقم الضريبي..." />
-      </div>
-
-      <div class="drawer-card filters-card">
-        <div class="drawer-label">فلترة الأصناف</div>
-        <div class="filter-title">حسب البراند</div>
-        <div class="filters-row" id="brandFilters"></div>
-        <div class="filter-title">حسب اللون</div>
-        <div class="filters-row compact" id="colorFilters"></div>
-      </div>
-
-      <div class="drawer-card">
-        <div class="drawer-label">الأدوات</div>
-        <div class="actions-grid">
-          <button id="addBtn">إضافة</button>
-          <button id="printBtn" class="ghost">طباعة</button>
-          <button id="backupBtn" class="ghost">تصدير نسخة</button>
-          <label class="import-label ghost" for="importFile">استيراد نسخة</label>
-          <input id="importFile" type="file" accept="application/json" hidden />
-          <button id="resetBtn" class="ghost danger-soft wide">استرجاع الأصل</button>
-        </div>
-      </div>
-
-      <div class="drawer-card settings-card">
-        <div class="drawer-label">إعدادات العرض</div>
-        <div class="switches">
-          <label><input id="quickMode" type="checkbox" /> وضع الشغل السريع</label>
-          <label><input id="showFavoritesFirst" type="checkbox" checked /> إظهار المفضلة والأكثر استخدامًا</label>
-        </div>
-        <div class="footer-actions">
-          <button id="themeBtn" class="ghost">الوضع الداكن</button>
-          <button id="lockBtn" class="ghost danger-soft">قفل</button>
-        </div>
-      </div>
-    </header>
-
-    <section class="status-grid">
-      <article class="status-card">
-        <span>آخر نسخ</span>
-        <strong id="lastCopiedName">لسه مفيش</strong>
-        <code id="lastCopiedValue">—</code>
-      </article>
-      <article class="status-card barcode-box">
-        <span>معاينة الباركود</span>
-        <div id="barcodePreview" class="barcode-preview"></div>
-        <code id="barcodePreviewText">—</code>
-      </article>
-      <article class="status-card">
-        <span>إحصائيات</span>
-        <strong id="statsText">—</strong>
-        <small>البيانات محفوظة على الجهاز</small>
-      </article>
     </section>
+  </div>
 
-    <section id="content" class="content"></section>
-  </main>
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <div class="sidebar-head">
+        <div class="brand-mark small">OV</div>
+        <div>
+          <strong>OVAL Codes Hub</strong>
+          <span>نسخة منظمة للشغل السريع</span>
+        </div>
+      </div>
 
-  <dialog id="editorDialog" class="editor-dialog">
-    <form method="dialog" id="editorForm">
+      <nav class="side-section tabs" aria-label="الصفحات">
+        <button class="nav-btn active" data-page="products">الأصناف والباركود</button>
+        <button class="nav-btn" data-page="clients">الأرقام الضريبية</button>
+        <button class="nav-btn" data-page="dashboard">Dashboard</button>
+        <button class="nav-btn" data-page="history">السجل والجودة</button>
+      </nav>
+
+      <div class="side-section eta-quick-card">
+        <div class="section-title">اختصار المنظومة</div>
+        <a class="eta-big-link" href="https://invoicing.eta.gov.eg/" target="_blank" rel="noopener">
+          <span class="eta-icon eta-logo-wrap"><img src="eta-logo.png" alt="شعار مصلحة الضرائب المصرية"></span>
+          <span>منظومة الفاتورة الإلكترونية</span>
+        </a>
+      </div>
+
+      <div class="side-section product-only">
+        <div class="section-title">فلتر الأصناف</div>
+        <div class="filter-grid" id="brandFilters">
+          <button class="chip active" data-brand="all">الكل</button>
+          <button class="chip" data-brand="big">بيج ايج</button>
+          <button class="chip" data-brand="carrefour">كارفور</button>
+          <button class="chip" data-brand="value">فاليو</button>
+          <button class="chip" data-brand="other">أخرى</button>
+        </div>
+      </div>
+
+      <div class="side-section product-only">
+        <div class="section-title">لون البيض</div>
+        <div class="filter-grid small-grid" id="colorFilters">
+          <button class="chip active" data-color="all">الكل</button>
+          <button class="chip" data-color="أبيض">أبيض</button>
+          <button class="chip" data-color="أحمر">أحمر</button>
+          <button class="chip" data-color="بلدي">بلدي</button>
+        </div>
+      </div>
+
+      <div class="side-section">
+        <div class="section-title">أدوات</div>
+        <div class="tool-stack">
+          <a class="tool-link eta" href="https://invoicing.eta.gov.eg/" target="_blank" rel="noopener">فتح منظومة الفاتورة الإلكترونية</a>
+          <button class="tool-btn" id="copyEtaBtn">نسخ لينك المنظومة</button>
+          <button class="tool-btn product-only" id="scanBtn">سكان باركود بالكاميرا</button>
+          <button class="tool-btn product-only" id="copySelectedBtn">نسخ المحدد</button>
+          <button class="tool-btn product-only" id="printSelectedBtn">طباعة المحدد</button>
+          <button class="tool-btn" id="exportBtn">تصدير نسخة</button>
+          <label class="tool-btn file-label">استيراد نسخة<input id="importFile" type="file" accept=".json,.csv" hidden /></label>
+          <button class="tool-btn danger" id="resetBtn">استرجاع الأصل</button>
+        </div>
+      </div>
+
+      <div class="side-section">
+        <div class="section-title">إعدادات العرض</div>
+        <div class="toggle-list">
+          <label><input type="checkbox" id="quickMode" /> وضع الشغل السريع</label>
+          <label><input type="checkbox" id="wideMode" /> وضع الشاشة الكبيرة</label>
+          <label><input type="checkbox" id="themeToggle" /> الوضع الكحلي</label>
+        </div>
+      </div>
+
+      <button id="logoutBtn" class="logout">تسجيل خروج</button>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="title-block">
+          <p class="eyebrow" id="pageEyebrow">Products</p>
+          <h1 id="pageTitle">الأصناف والباركود</h1>
+        </div>
+
+        <div class="top-search">
+          <input id="searchInput" type="search" placeholder="ابحث بالاسم أو الرقم: باركود / رقم ضريبي" />
+          <button id="voiceBtn" title="بحث صوتي">🎙️</button>
+        </div>
+
+        <div class="top-actions">
+          <a class="eta-top" href="https://invoicing.eta.gov.eg/" target="_blank" rel="noopener" title="منظومة الفاتورة الإلكترونية"><img src="eta-logo.png" alt="منظومة الفاتورة الإلكترونية"></a>
+          <div id="lastCopied" class="last-copy detailed">آخر نسخ: لا يوجد</div>
+          <button id="addBtn" class="btn primary">+ إضافة</button>
+        </div>
+      </header>
+
+      <section class="hero-panel">
+        <div>
+          <strong>مساحة شغل منظمة</strong>
+          <p>بحث، فلترة، نسخ سريع، ومراجعة جودة البيانات بدون زحمة.</p>
+        </div>
+        <div class="mini-stats">
+          <span><b id="productCount">0</b> صنف</span>
+          <span><b id="clientCount">0</b> عميل</span>
+          <span><b id="todayCopies">0</b> نسخ اليوم</span>
+        </div>
+      </section>
+
+      <section id="pinnedSection" class="content-section hidden"></section>
+      <section id="content" class="content-section"></section>
+    </main>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-card">
       <div class="modal-head">
-        <h2 id="editorTitle">تعديل</h2>
-        <button type="button" id="closeEditor" class="icon-btn">×</button>
+        <h2 id="modalTitle">تعديل</h2>
+        <button id="closeModal" class="icon-btn">×</button>
       </div>
-      <div id="productFields" class="form-grid">
-        <label>اسم الصنف<input id="itemName" /></label>
-        <label>الباركود<input id="itemBarcode" dir="ltr" /></label>
-        <label>التصنيف
-          <select id="itemGroup">
-            <option>بيج ايج</option>
-            <option>كارفور</option>
-            <option>فاليو</option>
-            <option>أخرى</option>
-          </select>
-        </label>
-        <label>اللون
-          <select id="itemColor">
-            <option>أبيض</option>
-            <option>أحمر</option>
-            <option>بلدي</option>
-            <option>غير محدد</option>
-          </select>
-        </label>
-      </div>
-      <div id="clientFields" class="form-grid hidden">
-        <label>اسم الشركة<input id="clientName" /></label>
-        <label>الرقم الضريبي<input id="clientTax" dir="ltr" /></label>
-      </div>
-      <div class="modal-actions">
-        <button id="saveEditor" value="default">حفظ</button>
-        <button type="button" id="deleteItem" class="danger-soft">حذف</button>
-      </div>
-    </form>
-  </dialog>
+      <form id="editForm" class="form-grid">
+        <input type="hidden" id="editId" />
+        <label>الاسم<input id="editName" required /></label>
+        <label class="product-field">الباركود<input id="editCode" /></label>
+        <label class="client-field hidden">الرقم الضريبي<input id="editTax" /></label>
+        <label class="product-field">البراند<select id="editBrand"><option>بيج ايج</option><option>كارفور</option><option>فاليو</option><option>أخرى</option></select></label>
+        <label class="product-field">اللون<select id="editColor"><option>أبيض</option><option>أحمر</option><option>بلدي</option><option>غير محدد</option></select></label>
+        <label class="full">ملاحظات<textarea id="editNote" rows="3"></textarea></label>
+        <button type="submit" class="btn primary full">حفظ</button>
+      </form>
+    </div>
+  </div>
 
-  <div id="toast" class="toast"></div>
+  <div id="scanner" class="modal hidden">
+    <div class="modal-card scanner-card">
+      <div class="modal-head"><h2>سكان باركود</h2><button id="closeScanner" class="icon-btn">×</button></div>
+      <video id="video" autoplay playsinline></video>
+      <p id="scanStatus" class="muted">افتح الكاميرا ووجهها على الباركود.</p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
   <script src="app.js"></script>
 </body>
 </html>
